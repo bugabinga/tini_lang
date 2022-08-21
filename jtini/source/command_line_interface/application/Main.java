@@ -1,24 +1,32 @@
-package net.bugabinga.tini;
+package application;
 
 import static java.text.MessageFormat.format;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Stream;
 
-public class Tini {
+import report.IssueReporter;
+import token.Token;
+import token.Tokenizer;
 
-	private static final int NOT_ENOUGH_COMMAND_LINE_ARGUMENTS = 64;
+public class Main {
 
-	public static void main(final String[] command_line_arguments) throws Throwable {
+	private static final int BUFFER_SIZE = 512;
+	private static final int TOO_MANY_COMMAND_LINE_ARGUMENTS = 64;
+
+	public static final void main(final String[] command_line_arguments)
+	throws Throwable {
 		if (command_line_arguments.length > 1) {
 			usage();
-			throw exit(NOT_ENOUGH_COMMAND_LINE_ARGUMENTS);
+			throw fail(TOO_MANY_COMMAND_LINE_ARGUMENTS);
 		}
 		else if (command_line_arguments.length == 1){
 			final var script = Path.of(command_line_arguments[0]);
@@ -29,12 +37,33 @@ public class Tini {
 		}
 	}
 
-	private static final void interpret(final Path script_path){
-		//TODO
+	private static final void interpret(final Path script_path)
+	throws IOException {
+		final var bytes = Files.readAllBytes(script_path);
+		evaluate(new String(bytes, StandardCharsets.UTF_8));
 	}
 
-	private static final void read_eval_print_loop(){
-		//TODO
+	private static final void read_eval_print_loop()
+	throws IOException {
+		final var input = new InputStreamReader(System.in, StandardCharsets.UTF_8);
+		final var reader = new BufferedReader(input, BUFFER_SIZE);
+
+		while(true) {
+			System.out.print("> ");
+			final var line = reader.readLine();
+			if (line == null) break;
+			evaluate(line);
+		}
+	}
+
+	private static final void evaluate(final String code) {
+		final var reporter = new IssueReporter(System.err);
+		final var tokenizer = new Tokenizer(reporter, code);
+		final List<Token> tokens = tokenizer.tokens();
+
+		for (final var token: tokens) {
+			print(token.toString());
+		}
 	}
 
 	private static final void usage(){
@@ -53,7 +82,7 @@ public class Tini {
 	}
 
 	private static final void print(final String message, Object... arguments){
-		print(format(System.out, message, arguments));
+		print(System.out, format(message, arguments));
 	}
 
 	private static final void print(PrintStream output, final String message, final Object... arguments){
