@@ -1,0 +1,172 @@
+// Hello World
+print "Hello, World!"
+
+// booleans
+true;
+false;
+
+// numbers
+1234;
+12.34;
+
+// strings
+"yo!";
+"Me is a text!";
+"";
+
+// sentinel value for every type
+nil;
+
+// arithmetic
+add + me;
+subtract - me;
+multiply * me;
+divide / me;
+
+-negateMe;
+
+// comparison and equality
+less < than;
+lessThan <= orEqual;
+greater > than;
+greaterThan >= orEqual;
+
+1 == 2;
+"cat" != "dog";
+3.14 == PI;
+123 == "123";
+
+
+// logical operators
+!true;
+!false;
+
+true and false;
+true and true;
+
+false or false;
+true or true;
+
+// precedence and grouping
+var average = (min + max) / 2;
+
+// statements
+print "Za Warudo!";
+
+"some expression";
+
+{
+	print "One";
+	print "2";
+}
+
+// variables
+var iAmAVariable = "some default value";
+var iAmNil;
+
+var breakfast = "bagels";
+print breakfast;
+breakfast = "donuts";
+print breakfast;
+
+// control flow
+
+if(condition) {
+	print "yes";
+}
+else {
+	print "no";
+}
+
+var i = 0;
+while (i < 10) {
+	print i;
+	i = i + 1;
+}
+
+for(var i = 0; a < 10; a = a + 1) {
+	print i;
+}
+
+// functions
+makeBreakfast(bacon, eggs, coffee);
+
+makeCoffee();
+
+fun printSum( a, b ){
+	print a + b;
+}
+
+fun sum( a,b ) {
+	return a + b;
+}
+
+// closures
+fun addPair( a,b ) {
+	return a + b;
+}
+
+fun identity(a) { return a; }
+
+print identity(addPair)(1,2);
+
+fun outerFunction() {
+	fun localFunction(){
+		print "I am local!";
+	}
+	localFunction();
+}
+
+fun returnFunction(){
+	var outside = "outside";
+	fun inner(){
+		print outside;
+	}
+	return inner;
+}
+
+var fn = returnFunction();
+fn();
+
+// classes
+class Breakfast {
+
+	init(meat, bread){
+		this.meat = meat;
+		this.bread = bread;
+	}
+
+	cook() {
+		print "Friggin' eggs!";
+	}
+
+	serve(whom) {
+		print "Enjoy deez nuts, " + who + "!";
+		if( this.meat !+ nil) print "Meat is " + this.meat;
+		if( this.bread !+ nil) print "Bread is " + this.bread;
+	}
+}
+
+var someVariable = Breakfast;
+someFunction(Breakfast);
+
+var breakfast = Breakfast();
+print breakfast;
+
+breakfast.meat = "sausage";
+breakfast.bread = "sourdough";
+
+var yummy = Breakfast("steak", "croissant");
+yummy.serve("Francois");
+
+// inheitance
+
+class Brunch < Breakfast {
+	init(meat, bread, drink){
+		super.init(meat,bread);
+		this.drink = drink;
+	}
+	drink(){
+		print "Drinkink the koolaid!";
+	}
+}

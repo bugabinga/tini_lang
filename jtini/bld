@@ -1,0 +1,11 @@
+-d build/modules
+
+--module-source-path source
+--module command_line_interface
+
+--release 17
+
+-deprecation
+-encoding UTF-8
+-g
+

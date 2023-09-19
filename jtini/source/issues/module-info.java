@@ -1,3 +1,0 @@
-module issues {
-	exports report;
-}

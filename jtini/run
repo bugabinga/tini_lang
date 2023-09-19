@@ -1,0 +1,2 @@
+--module-path build/modules
+--module command_line_interface/main.Main
